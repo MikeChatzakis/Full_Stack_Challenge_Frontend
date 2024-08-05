@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/* base styles */
+* {
+  margin: 0;
+  font-family: "Quicksand";
+  color: #333;
+}
+
+
+.navbar {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  border-bottom: 1px solid #f2f2f2;
+}
+.navbar h1 {
+  color: #f1356d;
+}
+.navbar .links {
+  margin-left: auto;
+}
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 6px;
+}
+.navbar a:hover {
+  color: #f1356d;
+}
+.content {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+
+
+
+/* ------------------------------------NEW STYLES ------------------------------------*/
+
+/* ----------add Skill styles ----------*/
+/* body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+} */
+.newSkill_wrapper {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  /* align-items: center; Center vertically */
+  padding: 20px;
+  
+}
+
+.newSkill {
+  
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  text-align: center;
+}
+
+.newSkill h2 {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.newSkill form {
+
+  display: flex;
+  flex-direction: column;
+}
+
+.newSkill label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.newSkill input {
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.newSkill textarea {
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.newSkill button {
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.newSkill button:hover {
+  background-color: #218838;
+}
+
+/* ----------List Skill styles ----------*/
+
+.list_wrapper{
+  display:flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+  padding: 20px;
+}
+
+.myList {
+  text-align: center;
+}
+
+.list_wrapper .myList h1 {
+  margin-bottom: 20px; /* Add some space below the title */
+}
+
+
+.list_wrapper .myList .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 100px); /* 3 columns, each 100px wide */
+  grid-template-rows: repeat(2, 100px);    /* 2 rows, each 100px high */
+  gap: 100px; /* Gap between grid items */
+  row-gap: 25px;
+  list-style-type: none; /* Remove default list styling */
+  padding: 0;
+}
+
+.list_wrapper .myList .grid li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #eafbfe;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; 
+  width: 150px; 
+  height: auto;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.list_wrapper .myList .grid li:hover {
+  transition: transform 0.2s;
+  transform: scale(1.1);
+}
+
