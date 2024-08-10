@@ -7,37 +7,96 @@
   color: #333;
 }
 
+/* ----------navbar new ----------*/
 
 .navbar {
-  padding: 20px;
-  display: flex;
-  align-items: center;
   max-width: 600px;
   margin: 0 auto;
   border-bottom: 1px solid #f2f2f2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  color: white;
 }
-.navbar h1 {
-  color: #f1356d;
+
+.navbar-title {
+  color: rgb(30, 88, 25);
+  font-size: 1.5em;
 }
-.navbar .links {
-  margin-left: auto;
+
+/* Basic styling for the menu */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
 }
-.navbar a {
-  margin-left: 16px;
+
+.menu-item {
+  position: relative;
+
+}
+
+.menu-item a,
+.dropdown-toggle,
+.dropdown-toggle-2 {
+  display: block;
+  padding: 15px 20px;
+  color: rgb(30, 88, 25);
   text-decoration: none;
-  padding: 6px;
-}
-.navbar a:hover {
-  color: #f1356d;
-}
-.content {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
+  border-radius: 8px;
 }
 
+.menu-item a:hover,
+.dropdown-toggle:hover {
+  background-color: #dad5d5;
+}
 
+.dropdown-menu {
+ 
+  overflow: hidden; /* Hide overflowing content */
+  /* background-color: #d8f3db; */
+  background-color: #f7edbf;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 0; /* Initially collapsed */
+  opacity: 0; /* Initially invisible */
+  visibility: hidden; /* Hide content visually */
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out, max-height 0.5s ease-out; /* Smooth transitions */
+  }
 
+.dropdown-menu li a {
+  padding: 10px 20px;
+  white-space: nowrap; /* Prevents text from wrapping */
+  display: block;
+
+}
+
+.dropdown-menu li button {
+  min-width: 100px;
+  padding: 0px;
+  margin: 1px;
+  border: none;
+  border-radius: 8px;
+}
+
+/* Show dropdown menu on hover */
+.menu-item.dropdown:hover .dropdown-menu {
+  padding: 5px;
+  max-height: 200px;
+  opacity: 1; /* Make visible */
+  visibility: visible; /* Ensure visibility */
+
+}
 
 /* ------------------------------------NEW STYLES ------------------------------------*/
 
@@ -121,100 +180,148 @@
 
 /* ----------List Skill styles ----------*/
 
-.list_wrapper{
-  display:flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center;
-  padding: 20px;
-}
-
-.myList {
-  text-align: center;
-}
-
-.list_wrapper .myList h1 {
-  margin-bottom: 20px; /* Add some space below the title */
-}
 
 
-.list_wrapper .myList .grid {
-  display: grid;
-  grid-template-columns: repeat(3, 100px); /* 3 columns, each 100px wide */
-  grid-template-rows: repeat(2, 100px);    /* 2 rows, each 100px high */
-  gap: 100px; /* Gap between grid items */
-  row-gap: 25px;
-  list-style-type: none; /* Remove default list styling */
-  padding: 0;
-}
-
-.list_wrapper .myList .grid li {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: #eafbfe;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis; 
-  width: 150px; 
-  height: auto;
   text-align: center;
-  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.list_wrapper .myList .grid li:hover {
+/* Styling for the title */
+.title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+/* Grid container styling */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates 3 columns */
+  gap: 20px; /* Space between grid items */
+  width: 100%;
+  max-width: 600px; /* Optional: limits the width of the grid */
+}
+
+/* Styling for each grid item */
+.grid-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #d8f3db;
+  padding: 5px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Styling for each link inside the grid items */
+.grid-item a {
+  text-decoration: none;
+  color: #333;
+}
+
+.grid-item:hover {
+  transform: scale(1.1); /* Slightly enlarges the item */
   transition: transform 0.2s;
-  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
 }
 
 /* ----------Skill page styles ----------*/
 
-.skill_details_wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: #fff;
-  padding: 10px;
+.details-container {
+  max-width: 600px; /* Optional: limits the width of the container */
+  margin: 20px auto; /* Center the container and add top/bottom margin */
+  padding: 20px;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #e7f7e9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
 }
 
-.skill_details_wrapper h2 {
-  margin-bottom: 10px;
+/* Styling for the header section */
+.details-header {
+  display: flex;
+  justify-content: space-between; /* Aligns title to the left and date to the right */
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
 }
 
-.skill_details_wrapper span{
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
-  color: #666;
-  
+.details-header h1 {
+  font-size: 2.5em;
+  margin: 0;
+  width: 450px;
+  overflow-wrap: break-word;
 }
 
-.skill_details_wrapper .skill_details {
-  margin-top: 10px;
-  padding: 10px;
-  border-top: 1px solid #ccc;
-  width: 600px;
-  word-wrap: break-word; /* Ensure long words break and wrap */
-  overflow-wrap: break-word; /* Modern equivalent of word-wrap */
-  word-break: break-all; /* Ensure any text will break and wrap */
-  white-space: normal; /* Ensure text wraps normally */
+.details-header span {
+  font-size: 1em;
+  color: #9f9d9d; /* Optional: makes the date less prominent */
 }
 
-.skill_details_wrapper button {
-  background: #f1356d;
+/* Styling for the content section */
+.details-content {
+  text-align: left; /* Aligns text to the left */
+}
+
+.details-content p {
+  margin: 0; /* Removes default margin from the paragraph */
+  line-height: 1.6; /* Adds spacing between lines */
+  overflow-wrap: break-word;
+}
+
+.details-container button {
+  font-size: medium;
+  background: #255b2e;
   color: #fff;
   border: 0;
-  padding: 10px;
+  padding: 3px;
   margin: 2px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+/* Search Bar for employees */
+
+.search-container {
+  position: relative; 
+  display: inline-block;
+}
+
+/* Search icon */
+.search-icon {
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+/* Search bar (hidden by default) */
+.search-bar {
+  position: absolute; 
+  top: 50%;
+  left: 100%; 
+  transform: translateX(10px) translateY(-50%); 
+  display: block;
+  width: auto;
+  padding: 2px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  background: #f7edbf;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show the search bar when hovering over the container */
+.search-container:hover .search-bar {
+  display: block;
+  opacity: 1;
 }
