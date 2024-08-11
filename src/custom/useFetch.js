@@ -13,7 +13,9 @@ const useFetch = (url) => {
           fetch(url,{signal: abortCont.signal})
           .then(res => {
             if (!res.ok) { // error coming back from server
-              throw Error('could not fetch the data for that resource');
+              return res.json().then(errData => {
+                throw new Error(errData.message || 'Could not fetch the data for that resource');
+              });
             } 
             return res.json();
           })
@@ -23,29 +25,26 @@ const useFetch = (url) => {
             setError(null);
           })
           .catch(err => {
-            
+            setIsPending(false);
             // auto catches network / connection error
-            switch(err){
+            switch(err.name){
                 case 'AbortError':
                     console.log('fetch Aborted');
                 break;
                 case 'NetworkError':
                     console.log('Network Error');
-                    setIsPending(false);
                     setError(err.message);
                 break;
                 case 'FetchError':
                     console.log('Fetch Error');
-                    setIsPending(false);
                     setError(err.message);
                 break;
                 default:
-                    setIsPending(false);
                     setError(err.message);
             }
           })
-        // },1000);
-        },);
+         },1000);
+        // },);
 
         //cleanup
         return () => abortCont.abort();

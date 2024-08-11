@@ -1,25 +1,52 @@
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import useFetch from '../../custom/useFetch';
 import {useState, useEffect} from 'react';
-
+import PlainList from '../partials/plain_list';
 
 const Employee = () => {
 
     const { id } = useParams();
     const history = useHistory();
 
-    const {data , isPending, Error} = useFetch('http://localhost:3002/api/employee/'+id);
-
-
     const [this_employee,setThisEmployee]=useState(null);
 
+    const [employeeSkills,setEmployeeSkills] = useState(null);
+
     const [editMode, setEditMode] = useState(false);
+
+
+
+    //get employee data
+    const {data , isPending, error} = useFetch('http://localhost:3002/api/employee/'+id);
+
+    //get skill data
+    const {data: dataSkill, isPending:isPendingSkill, error:ErrorSkill} = useFetch('http://localhost:3002/api/SingleEmployeeAllSkills/'+id);
 
     useEffect(() => {
         if (data) {
             setThisEmployee(data);
         }
+        
       },[data]);
+
+    useEffect(() =>{
+        if(dataSkill){
+            setEmployeeSkills(dataSkill);           
+        }
+    },[dataSkill]);
+
+    useEffect(() => {
+            console.log("An error occurred:", ErrorSkill);
+    }, [ErrorSkill]);
+
+    useEffect(() => {
+
+        if (isPendingSkill) {
+            console.log("Pending Accured:", isPendingSkill);
+        }
+    }, [isPendingSkill]);
+
+
 
 
     const handleDelete= () => {
@@ -66,23 +93,33 @@ const Employee = () => {
         <div>
             {/* watch mode */}
             {!editMode && <div>
-                {isPending && <div>Loading...</div>}
-                {Error && <div>Error:{Error}</div>}
+                {isPending && <h2>Loading...</h2>}
+                {error && <h2>Error:{error}</h2>}
                 {this_employee && (
-                    <div className="details-container">
-                        <div className="details-header">
-                            <h1>{this_employee.name} {this_employee.surname}</h1>
+                    <div>
+                        <div className="details-container">
+                            <div className="details-header">
+                                <h1>{this_employee.name} {this_employee.surname}</h1>
+                            </div>
+                                                
+                            <div className="details-content">
+                                <h2>Personal Info:</h2>
+                                <p><b>email:</b>{this_employee.email}</p>
+                                <p><b>phone number:</b>{this_employee.phone}</p>
+                            </div>
+                            <button onClick={handleDelete}> Delete </button>
+                            <button onClick={switchEdit}> Edit mode </button>
                         </div>
-                                              
-                        <div className="details-content">
-                            <h2>Personal Info:</h2>
-                            <p><b>email:</b>{this_employee.email}</p>
-                            <p><b>phone number:</b>{this_employee.phone}</p>
+                        <div>
+                            
+                            <PlainList title="Aqcuired Skills" data={employeeSkills} isPending={isPendingSkill} ErrorHere={ErrorSkill} getGridItemClassName={()=>{return 'grid-item'}} handleClick={()=>{}}/>
+
                         </div>
-                        <button onClick={handleDelete}> Delete </button>
-                        <button onClick={switchEdit}> Edit mode </button>
                     </div>
+                    
                 )}
+                
+
             </div>}
 
             {/* edit mode */}

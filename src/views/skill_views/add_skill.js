@@ -27,7 +27,7 @@ const Add_skill = () => {
         .then(res => res.json())
         .then(createdObject => {
             setIsPending(false);
-            history.push('/');
+            //history.push('/');
         })
         .catch( (err) => {
             setError(err.message);
