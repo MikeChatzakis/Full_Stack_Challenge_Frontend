@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import useFetch from '../../custom/useFetch';
 import Add_skill from '../skill_views/add_skill';
 import PlainList from '../partials/plain_list';
+import SubmitPage from '../partials/submit_page';
 
 const Add_employee = () => {
 
@@ -81,7 +82,7 @@ const Add_employee = () => {
 
     return (
         <div className='newSkill_wrapper'>
-            <div className="newSkill">
+            {/* <div className="newSkill">
                 <h2>Add new Employee</h2>
                 <form onSubmit={handleSubmit}>
                     <label>Name:</label>
@@ -99,6 +100,10 @@ const Add_employee = () => {
                     {!isPending && <button>Add</button>}
                     {isPending && <button>Adding...</button>}
                 </form>
+            </div> */}
+
+            <div>
+                <SubmitPage title="Skill" url="http://localhost:3002/api/addSkill" data={newEmployee} setData={setNewEmployee} />
             </div>
 
             <div>

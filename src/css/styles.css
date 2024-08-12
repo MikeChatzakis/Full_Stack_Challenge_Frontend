@@ -173,6 +173,11 @@
   margin: 2px;
 }
 
+.newSkillData {
+  display: flex;
+  flex-direction: column;
+}
+
 .newSkill button:hover {
   background-color: #218838;
 }
