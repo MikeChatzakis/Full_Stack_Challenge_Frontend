@@ -115,17 +115,14 @@ const Employee = () => {
                             <PlainList title="Aqcuired Skills" data={employeeSkills} isPending={isPendingSkill} ErrorHere={ErrorSkill} getGridItemClassName={()=>{return 'grid-item'}} handleClick={()=>{}}/>
 
                         </div>
-                    </div>
-                    
+                    </div> 
                 )}
-                
-
             </div>}
 
             {/* edit mode */}
             {editMode && <div>
 
-                <div className='newSkill_wrapper'>
+            <div className='newSkill_wrapper'>
             <div className="newSkill">
                 <h2>Edit Employee Details</h2>
                 <form onSubmit={handleSubmit}>
