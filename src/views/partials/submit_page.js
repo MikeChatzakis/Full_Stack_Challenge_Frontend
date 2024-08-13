@@ -1,15 +1,12 @@
 import {useState} from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-
 import React from 'react';
 
 
 
-const SubmitPage = ({title, url , data, setData}) => {
+const SubmitPage = ({title, url , data, setData, setResult}) => {
 
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false);
-    const history=useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,7 +22,7 @@ const SubmitPage = ({title, url , data, setData}) => {
         .then(res => res.json())
         .then(createdObject => {
             setIsPending(false);
-            history.push('/');
+            setResult(createdObject);
         })
         .catch( (err) => {
             setIsPending(false);
@@ -35,7 +32,6 @@ const SubmitPage = ({title, url , data, setData}) => {
     }
 
     return (
-        <div className='newSkill_wrapper'>
             <div className="newSkill">
                 <h2>Add new {title}</h2>
                 <form onSubmit={handleSubmit}>
@@ -54,8 +50,6 @@ const SubmitPage = ({title, url , data, setData}) => {
                     {error && <div className="error">{error}</div>}
                 </form>
             </div>
-        </div>
-
     )
 }
 

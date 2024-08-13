@@ -1,7 +1,6 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import useFetch from '../../custom/useFetch';
-import Add_skill from '../skill_views/add_skill';
 import PlainList from '../partials/plain_list';
 import SubmitPage from '../partials/submit_page';
 
@@ -9,57 +8,46 @@ const Add_employee = () => {
 
     const {data: SkillsData, isPending: isPendingSkills, error: ErrorSkills} = useFetch('http://localhost:3002/api/Skills_list');
 
-
-
+    //Stores input data before submit
     const [newEmployee,setNewEmployee]=useState({name:'', surname:'', phone:'', email:''});
-
+    
+    //stores selected Skill data locally before submit
     const[EmployeeSkills,setEmployeeSkills]=useState([]);
 
+    //error handling
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false);
 
+    //after employee is created stores the employee object returned data from the backend
+    const [createdEmployee,setCreatedEmployee] =useState(null);
+
     const history=useHistory();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setIsPending(true);
-
-        fetch('http://localhost:3002/api/addEmployee',{
-            method: 'POST',
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify(newEmployee)
-        })
-        .then(res => res.json())
-        .then(createdObject => {
-            const {_id: newUserID } = createdObject;
-            const EmployeeSkillsObject = {newUserID,EmployeeSkills};
+    //when the employee is created trigger another fetch request to make the employee-skill relations in the DB
+    useEffect(()=>{
+        if(createdEmployee){
+            const secondFetchData = {newUserID:createdEmployee._id,EmployeeSkills} 
 
             fetch('http://localhost:3002/api/addManyEmpSkills',{
-                method: 'POST',
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify(EmployeeSkillsObject)
-            })
-            .then( () => {
-                // setIsPending(false);
-                history.push('/');
-            })
-            .catch((err) =>{
-                setError(err.message);
-                console.log(error);
-            })
+                    method: 'POST',
+                    headers: {"Content-type": "application/json"},
+                    body: JSON.stringify(secondFetchData)
+                })
+                .then(res => res.json())
+                .then( () => {
+                    //  setIsPending(false);
+                    history.push('/');
+                })
+                .catch((err) =>{
+                    setError(err.message);
+                    console.log(error);
+                })
+        }
 
 
+    },[createdEmployee])
 
-
-            // setIsPending(false);
-            // history.push('/');
-        })
-        .catch( (err) => {
-            setError(err.message);
-            console.log(error);
-        })
-    }
-
+        //-------local array before submit methods-------
     const addtoSkillList = (newSkill) => {
         setEmployeeSkills(prevSkills => [...prevSkills, newSkill]);
     };
@@ -75,6 +63,7 @@ const Add_employee = () => {
             addtoSkillList(id);
         }
     };
+    //-----------------------------------------------
 
     const getGridItemClassName = (id) => {
         return EmployeeSkills.includes(id) ? 'grid-item selected' : 'grid-item';
@@ -82,38 +71,14 @@ const Add_employee = () => {
 
     return (
         <div className='newSkill_wrapper'>
-            {/* <div className="newSkill">
-                <h2>Add new Employee</h2>
-                <form onSubmit={handleSubmit}>
-                    <label>Name:</label>
-                    <input type='text' required value={newEmployee.name} onChange={(e) => setNewEmployee(prevNewEmployee=>({...prevNewEmployee,name:e.target.value}))} placeholder='Type name here...'></input>
-
-                    <label>Surname:</label>
-                    <input type='text' required value={newEmployee.surname} onChange={(e) => setNewEmployee(prevNewEmployee=>({...prevNewEmployee,surname:e.target.value}))} placeholder='Type surname here...'></input>
-
-                    <label>Phone:</label>
-                    <input type='text' required value={newEmployee.phone} onChange={(e) => setNewEmployee(prevNewEmployee=>({...prevNewEmployee,phone:e.target.value}))} placeholder='Type phone number here...'></input>
-
-                    <label>Email:</label>
-                    <input type='text' required value={newEmployee.email} onChange={(e) => setNewEmployee(prevNewEmployee=>({...prevNewEmployee,email:e.target.value}))} placeholder='Type email here...'></input>
-
-                    {!isPending && <button>Add</button>}
-                    {isPending && <button>Adding...</button>}
-                </form>
-            </div> */}
-
+            
             <div>
-                <SubmitPage title="Skill" url="http://localhost:3002/api/addSkill" data={newEmployee} setData={setNewEmployee} />
+                <SubmitPage title="Employee" url="http://localhost:3002/api/addEmployee" data={newEmployee} setData={setNewEmployee} setResult={setCreatedEmployee} />
             </div>
 
             <div>
-                <PlainList title="Select Skills" data={SkillsData} isPending={isPendingSkills} Error={ErrorSkills} getGridItemClassName={getGridItemClassName} handleClick={handleAddSkill}/>
+                <PlainList title="Select Skills" url='http://localhost:3002/api/Skills_list' getGridItemClassName={getGridItemClassName} handleClick={handleAddSkill} showAddButton={true}/>
             </div>
-
-
-            {/* <div>
-                <Add_skill></Add_skill>
-            </div> */}
         </div>
 
     )

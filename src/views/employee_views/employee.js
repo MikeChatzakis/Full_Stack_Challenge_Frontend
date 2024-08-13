@@ -35,20 +35,6 @@ const Employee = () => {
         }
     },[dataSkill]);
 
-    useEffect(() => {
-            console.log("An error occurred:", ErrorSkill);
-    }, [ErrorSkill]);
-
-    useEffect(() => {
-
-        if (isPendingSkill) {
-            console.log("Pending Accured:", isPendingSkill);
-        }
-    }, [isPendingSkill]);
-
-
-
-
     const handleDelete= () => {
         fetch('http://localhost:3002/api/employee/'+id, {
             method: 'DELETE'
@@ -90,14 +76,14 @@ const Employee = () => {
 
 
     return (
-        <div>
+        <div className="">
             {/* watch mode */}
             {!editMode && <div>
-                {isPending && <h2>Loading...</h2>}
-                {error && <h2>Error:{error}</h2>}
+                {isPending && <h1 className="details-container">Loading...</h1>}
+                {error && <h1 className="details-container">Error:{error}</h1>}
                 {this_employee && (
                     <div>
-                        <div className="details-container">
+                        <div className="details-container">                            
                             <div className="details-header">
                                 <h1>{this_employee.name} {this_employee.surname}</h1>
                             </div>
@@ -111,8 +97,7 @@ const Employee = () => {
                             <button onClick={switchEdit}> Edit mode </button>
                         </div>
                         <div>
-                            
-                            <PlainList title="Aqcuired Skills" data={employeeSkills} isPending={isPendingSkill} ErrorHere={ErrorSkill} getGridItemClassName={()=>{return 'grid-item'}} handleClick={()=>{}}/>
+                            <PlainList title="Aqcuired Skills" url={'http://localhost:3002/api/SingleEmployeeAllSkills/'+id} getGridItemClassName={()=>{return 'grid-item'}} handleClick={()=>{}} showAddButton={false}/>
 
                         </div>
                     </div> 

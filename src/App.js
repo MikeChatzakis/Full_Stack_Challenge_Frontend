@@ -7,7 +7,7 @@ import Home from './views/home'
 //import skill views
 import Skill from './views/skill_views/skill';
 import Skills_list from './views/skill_views/skills_list';
-import Add_skill from './views/skill_views/add_skill';
+import AddSkill from './views/skill_views/add_skill';
 //import employee views
 import Add_employee from './views/employee_views/add_employee';
 import Employees_list from './views/employee_views/emloyees_list';
@@ -25,7 +25,7 @@ function App() {
         </Route>
 
         <Route exact path="/add-skill">
-          <Add_skill/>
+          <AddSkill />
         </Route>
 
         <Route exact path="/skills_list">
