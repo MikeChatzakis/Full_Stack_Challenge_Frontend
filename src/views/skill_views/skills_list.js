@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import useFetch from '../../custom/useFetch';
 
-const Skills_list = () => {
+const SkillsList = () => {
 
-    const {data: SkillsData,isPending: isPending, error: Error} = useFetch('http://localhost:3002/api/Skills_list');
+    const {data, isPending, error} = useFetch('http://localhost:3002/api/Skills_list');
     
     return(
 
         <div className="container">
             <h1 className="title">All Skills</h1>
             {isPending && <h2>Loading Skills...</h2>}
-            {Error && <h2>Error:{Error}</h2>}
+            {error && <h2>Error:{error}</h2>}
             <div className="grid">
-                {SkillsData && SkillsData.map((skill) => (
+                {data && data.map((skill) => (
                     <div key={skill._id} className="grid-item">
                     <Link to={`/skill/${skill._id}`}>
                         <h2>{skill.name}</h2>
@@ -28,4 +28,4 @@ const Skills_list = () => {
 
 
 
-export default Skills_list;
+export default SkillsList;

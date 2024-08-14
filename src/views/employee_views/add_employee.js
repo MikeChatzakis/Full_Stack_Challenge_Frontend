@@ -1,22 +1,15 @@
 import {useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import useFetch from '../../custom/useFetch';
-import PlainList from '../partials/plain_list';
+import {PlainList} from '../partials/plain_list';
 import SubmitPage from '../partials/submit_page';
 
-const Add_employee = () => {
-
-    const {data: SkillsData, isPending: isPendingSkills, error: ErrorSkills} = useFetch('http://localhost:3002/api/Skills_list');
+const AddEmployee = () => {
 
     //Stores input data before submit
     const [newEmployee,setNewEmployee]=useState({name:'', surname:'', phone:'', email:''});
     
-    //stores selected Skill data locally before submit
+    //stores selected Skills data locally before submit
     const[EmployeeSkills,setEmployeeSkills]=useState([]);
-
-    //error handling
-    const [error, setError] = useState(null);
-    const [isPending, setIsPending] = useState(false);
 
     //after employee is created stores the employee object returned data from the backend
     const [createdEmployee,setCreatedEmployee] =useState(null);
@@ -26,8 +19,9 @@ const Add_employee = () => {
     //when the employee is created trigger another fetch request to make the employee-skill relations in the DB
     useEffect(()=>{
         if(createdEmployee){
-            const secondFetchData = {newUserID:createdEmployee._id,EmployeeSkills} 
-
+            const secondFetchData = {newUserID:createdEmployee._id,EmployeeSkills};
+            console.log(secondFetchData);
+            
             fetch('http://localhost:3002/api/addManyEmpSkills',{
                     method: 'POST',
                     headers: {"Content-type": "application/json"},
@@ -39,8 +33,8 @@ const Add_employee = () => {
                     history.push('/');
                 })
                 .catch((err) =>{
-                    setError(err.message);
-                    console.log(error);
+                    //setError(err.message);
+                    console.log(err.message);
                 })
         }
 
@@ -48,6 +42,7 @@ const Add_employee = () => {
     },[createdEmployee])
 
         //-------local array before submit methods-------
+
     const addtoSkillList = (newSkill) => {
         setEmployeeSkills(prevSkills => [...prevSkills, newSkill]);
     };
@@ -73,11 +68,11 @@ const Add_employee = () => {
         <div className='newSkill_wrapper'>
             
             <div>
-                <SubmitPage title="Employee" url="http://localhost:3002/api/addEmployee" data={newEmployee} setData={setNewEmployee} setResult={setCreatedEmployee} />
+                <SubmitPage title="Add Employee" url="http://localhost:3002/api/addEmployee" data={newEmployee} setData={setNewEmployee} setResult={setCreatedEmployee} method='POST'/>
             </div>
 
             <div>
-                <PlainList title="Select Skills" url='http://localhost:3002/api/Skills_list' getGridItemClassName={getGridItemClassName} handleClick={handleAddSkill} showAddButton={true}/>
+                <PlainList title="Select Skills" url='http://localhost:3002/api/Skills_list' getGridItemClassName={getGridItemClassName} handleClick={handleAddSkill} showAddButton={true} handleDelete={null}/>
             </div>
         </div>
 
@@ -85,4 +80,4 @@ const Add_employee = () => {
 }
 
 
-export default Add_employee;
+export default AddEmployee;

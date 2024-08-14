@@ -19,7 +19,7 @@ const PopUpAddSkill = ({ isPopupOpen, setIsPopupOpen, setSubmitedSkillData}) => 
         <div className="popup-overlay" >
             <div className="popup-content">
                 <div className='newSkill_wrapper'>
-                    <SubmitPage title="Skill" url="http://localhost:3002/api/addSkill" data={newSkill} setData={setNewSkill} setResult={AfterSubmit}/>
+                    <SubmitPage title="Add Skill" url="http://localhost:3002/api/addSkill" data={newSkill} setData={setNewSkill} setResult={AfterSubmit} method='POST'/>
                 </div>
                 <button onClick={() => setIsPopupOpen(false)}>Close</button>
             </div>

@@ -3,7 +3,7 @@ import useFetch from '../../custom/useFetch';
 import {useState, useEffect, useCallback, useMemo} from 'react';
 import{ ReactComponent as SearchIcon} from '../../css/search.svg';
 
-const Employees_list = () => {
+const EmployeesList = () => {
 
     // const [EmployeesData, setEmployeesData] = useState();
 
@@ -130,4 +130,4 @@ const Employees_list = () => {
 }
 
 
-export default Employees_list;
+export default EmployeesList;

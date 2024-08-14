@@ -15,7 +15,7 @@ const AddSkill = () => {
 
     return (
         <div className='newSkill_wrapper'>
-            <SubmitPage title="Skill" url="http://localhost:3002/api/addSkill" data={newSkill} setData={setNewSkill} setResult={AfterSubmit}/>
+            <SubmitPage title="Add Skill" url="http://localhost:3002/api/addSkill" data={newSkill} setData={setNewSkill} setResult={AfterSubmit} method='POST'/>
         </div>
     )
 }

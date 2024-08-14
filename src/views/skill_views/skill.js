@@ -1,6 +1,7 @@
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import useFetch from '../../custom/useFetch';
 import {useState,useEffect} from 'react';
+import SubmitPage from '../partials/submit_page';
 
 const Skill = () => {
 
@@ -32,36 +33,8 @@ const Skill = () => {
 
     };
 
-    const handleSubmit= (e) => {
-        e.preventDefault();
-
-        fetch('http://localhost:3002/api/skill/'+id, { 
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify(this_skill),
-        })
-        .then(res => {
-            console.log('Response Content-Type:', res.headers.get('Content-Type'));
-            return res.text();
-        })
-        .then(createdObject => {
-            switchEdit(true);
-            console.log(createdObject);
-            //window.location.reload();
-        })
-        .catch( (err) => {
-            //setError(err.message);
-            console.log(err);
-        })
-
-    };
-
     const switchEdit= () => {
-        if(editMode){
-            return setEditMode(false);
-        }else{
-            return setEditMode(true);
-        }
+        return setEditMode(!editMode)
     };
 
 
@@ -90,20 +63,7 @@ const Skill = () => {
             {/* edit mode */}
             {editMode && 
             <div className='newSkill_wrapper'>
-                <div className="newSkill">
-                    <h2>Edit Skill</h2>
-                    <form onSubmit={handleSubmit}>
-                        <label>Skill name:</label>
-                        <input type='text' required value={this_skill.name} onChange={(e) => setThisSkill(prevSkill  => ({...prevSkill, name:e.target.value}))} placeholder='Type skill name here...'></input>
-
-                        <label>Skill details:</label>
-                        <textarea type='text' cols="50" rows="10" required value={this_skill.details} onChange={(e) => setThisSkill(prevSkill  => ({...prevSkill, details:e.target.value}))} placeholder='Type skill details here...'></textarea>
-
-                        <button>Save Changes</button>
-                        <button onClick={switchEdit}>Cancel edit</button>
-                        
-                    </form>
-                </div>
+                <SubmitPage title='Edit Skill' url={'http://localhost:3002/api/skill/'+id} method='PATCH' data={this_skill} setData={setThisSkill} setResult={switchEdit}/>
         </div>}
             
         </div>

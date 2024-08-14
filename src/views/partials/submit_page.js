@@ -3,7 +3,7 @@ import React from 'react';
 
 
 
-const SubmitPage = ({title, url , data, setData, setResult}) => {
+const SubmitPage = ({title, url , data, setData, setResult, method}) => {
 
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false);
@@ -15,7 +15,7 @@ const SubmitPage = ({title, url , data, setData, setResult}) => {
         console.log(url);
 
         fetch(url,{
-            method: 'POST',
+            method: method,
             headers: {"Content-type": "application/json"},
             body: JSON.stringify(data)
         })
@@ -30,14 +30,17 @@ const SubmitPage = ({title, url , data, setData, setResult}) => {
             console.log(error);
         })
     }
+    const keysToFilterOut = ['_id', '__v', 'dateCreated', 'dateAdded'];
 
     return (
             <div className="newSkill">
-                <h2>Add new {title}</h2>
+                <h2>{title}</h2>
                 <form onSubmit={handleSubmit}>
-                    {data && Object.keys(data).map(key => (
+                    {data && Object.keys(data)
+                    .filter(key => !keysToFilterOut.includes(key))  //first we filter out keys we dont want to be displayed
+                    .map(key => (                                   //iterate over all keys 
                         <div key={key} className='newSkillData'>
-                            <label>{title} {key}:</label>
+                            <label>{key}:</label>
                             {key !== 'details' ? (
                             <input type='text' required value={data[key]} onChange={(e) => setData(prevData => ({...prevData,[key]:e.target.value}))} placeholder={`Type ${key} here...`}></input>
                             ):(
