@@ -31,7 +31,7 @@ const PlainList = ({title, url, getGridItemClassName, handleClick, showAddButton
     useEffect(()=>{
         if(submitedSkillData){
             setData(prevData => [...prevData, submitedSkillData]); 
-            handleClick(submitedSkillData._id);
+            handleClick(submitedSkillData);
             setSubmitedSkillData(null);
         }
     },[submitedSkillData])
@@ -43,9 +43,8 @@ const PlainList = ({title, url, getGridItemClassName, handleClick, showAddButton
             {error && <h2>Error:{error}</h2>}
             <div className="grid smaller">
                 {data && data.map((skill) => (
-                    <div key={skill._id} className={getGridItemClassName(skill._id)} onClick={ () => handleClick(skill._id)}>
+                    <div key={skill._id} className={getGridItemClassName(skill._id)} onClick={ () => handleClick(skill)}>
                         <h2>{skill.name}</h2>
-
                         {/* delete option when hover*/}
                         {handleDelete && <div className='delete-overlay' onClick={(e) => handleDeleteClick(e,skill)}>
                             <button>X</button>
@@ -62,14 +61,8 @@ const PlainList = ({title, url, getGridItemClassName, handleClick, showAddButton
     )
 }
 
-const PlainListData = ({title, data, setData, getGridItemClassName, handleClick, showAddButton,handleDelete}) => {
-
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-    
-    const [submitedSkillData,setSubmitedSkillData] = useState(null);
-
-
-    
+const PlainListData = ({title, data, setData, error, isPending, getGridItemClassName, handleClick,handleDelete}) => {
+  
     const handleDeleteClick = (e,skill) => {
         e.stopPropagation();
         handleDelete(skill._id);
@@ -81,22 +74,20 @@ const PlainListData = ({title, data, setData, getGridItemClassName, handleClick,
     return(
         <div className="container">
             <h2 className="title">{title}</h2>
+            {isPending && <h2>Loading Skills...</h2>}
+            {error && <h2>{error}</h2>}
             <div className="grid smaller">
                 {data && data.map((skill) => (
                     <div key={skill._id} className={getGridItemClassName(skill._id)} onClick={ () => handleClick(skill)}>
                         <h2>{skill.name}</h2>
-
+                        {skill.dateAdded && <span>Aquired on {new Date(skill.dateAdded).toLocaleDateString('el-GR')}</span>}
                         {/* delete option when hover*/}
                         {handleDelete && <div className='delete-overlay' onClick={(e) => handleDeleteClick(e,skill)}>
                             <button>X</button>
                         </div>}
                     </div>
                 ))}
-
-                {/* popup to add a skill */}
-                {/* {showAddButton && <div className='grid-item-no-effects' onClick={() => setIsPopupOpen(true)}> <h1>+</h1> </div>}
-                <PopUpAddSkill isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} setSubmitedSkillData={setSubmitedSkillData}/> */}
-                
+                {/* Add button would go here if we want it */}
             </div>
         </div>
     )

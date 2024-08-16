@@ -22,7 +22,7 @@ const Employee = () => {
     const {data , isPending, error} = useFetch('http://localhost:3002/api/employee/'+id);
 
     //get Employee Skills Data
-    const {data:thisEmpSkillData} = useFetch('http://localhost:3002/api/SingleEmployeeAllSkills/'+id);
+    const {data:thisEmpSkillData, isPending:isPendingSkill, error:errorSkill} = useFetch('http://localhost:3002/api/SingleEmployeeAllSkills/'+id);
 
     //get all possible skills
     const {data:allSkillData} = useFetch('http://localhost:3002/api/Skills_list');
@@ -64,7 +64,6 @@ const Employee = () => {
             .then(() => {
                 
             })
-            console.log("Deleting something!");
     }
     
     const switchEdit= () => {
@@ -84,6 +83,12 @@ const Employee = () => {
             return 'grid-item';
     }
 
+    const getfunnytext = () => {
+        if(unobtainedSkills.length === 0)
+            return 'You are very very skilled! No more skills to get!';
+        else
+            return null;
+    }
 
     //-------local array before submit methods-------
 
@@ -107,22 +112,22 @@ const Employee = () => {
     const saveEmpSkills =(emp) => {
 
         const secondFetchData = {newUserID:emp._id,EmployeeSkills:selectedSkills};
-            fetch('http://localhost:3002/api/addManyEmpSkills',{
+            fetch('http://localhost:3002/api/addManyEmpSkills',{ //selected skills are created in the backend, date added atached in the backend
                     method: 'POST',
                     headers: {"Content-type": "application/json"},
                     body: JSON.stringify(secondFetchData)
                 })
                 .then(res => res.json())
                 .then( () => {
-                    console.log("BEFORE:");
-                    console.log(employeeSkills);
-                    console.log(selectedSkills);
-                    setEmployeeSkills(employeeSkills => [...employeeSkills, ...selectedSkills]);
-                    console.log("AFTER:");
-                    console.log(employeeSkills);
+                    //after skill relations are added to the backend we handle the view for the frontend since we want avoid another fetch request
+                    //1.add the date that the backend would automatically atach so when the view switches to view mode we keep seeing the date.
+                    const SelectedSkillsWithDateAdded = selectedSkills.map(skill => ({ ...skill, dateAdded: new Date() }));
+                    //2.set Employee's skills to also include the skills selected in edit mode
+                    setEmployeeSkills(employeeSkills => [...employeeSkills, ...SelectedSkillsWithDateAdded]);
+                    //3.reset selected skills array since all the selected skills are now part of the employee Skills
                     setSelectedSkills([]);
+                    //4.switch to view mode
                     switchEdit();
-                    //history.push('/');
                 })
                 .catch((err) =>{
                     //setError(err.message);
@@ -131,22 +136,9 @@ const Employee = () => {
     }
     //-----------------------------------------------
 
-
+    const keysToFilterOut = ['_id', '__v', 'createdAt', 'updatedAt','firstName','lastName'];
     return (
         <div>
-            <button
-            onClick={()=>{
-                console.log("Selected Skills:");
-                console.log(selectedSkills);
-                console.log("All skills:");
-                console.log(allSkillData);
-                console.log("Obtained Skills:");
-                console.log(employeeSkills);
-                console.log("Unobtained Skills:");
-                console.log(unobtainedSkills);
-            }}>
-                Show things
-            </button>
             {/* watch mode */}
             {!editMode && <div>
                 {isPending && <h1 className="details-container">Loading...</h1>}
@@ -155,26 +147,25 @@ const Employee = () => {
                     <div>
                         <div className="details-container">
                             <div className="details-header">
-                                <h1>{this_employee.name} {this_employee.surname}</h1>
+                                <h1>{this_employee.firstName} {this_employee.lastName}</h1>
+                                <span>Last Update: {new Date(this_employee.updatedAt).toLocaleDateString('el-GR')}</span>
                             </div>
-                                                
                             <div className="details-content">
                                 <h2>Personal Info:</h2>
-                                <p><b>email:</b>{this_employee.email}</p>
-                                <p><b>phone number:</b>{this_employee.phone}</p>
+                                {Object.keys(this_employee) // get employee keys
+                                .filter((key => !keysToFilterOut.includes(key))) // filter unwanted keys 
+                                .map((key) => ( //iterate over all keys
+                                    <p key={key}><b>{key}: </b>
+                                    {['dateOfBirth'].includes(key)? new Date(this_employee[key]).toLocaleDateString('el-GR') :this_employee[key]}
+                                    </p>
+                                ))}
                             </div>
                             <button onClick={handleDelete}> Delete </button>
                             <button onClick={switchEdit}> Edit mode </button>
                         </div>
+                        
                         <div>
-
-                            <PlainListData title="Aqcuired Skills"
-                            data={employeeSkills}
-                            setData={setEmployeeSkills}
-                            getGridItemClassName={()=>'grid-item'}
-                            handleClick={()=>{}}
-                            showAddButton={false}
-                            handleDelete={handleDeleteRelation}/>
+                            <PlainListData title="Aqcuired Skills" data={employeeSkills} setData={setEmployeeSkills} isPending={isPendingSkill} error={errorSkill} getGridItemClassName={()=>'grid-item'} handleClick={()=>{}} handleDelete={handleDeleteRelation}/>
                         </div>
                     </div> 
                 )}
@@ -189,13 +180,7 @@ const Employee = () => {
                 </div>
 
                 <div>
-                    <PlainListData title="Select Skills"
-                    data={unobtainedSkills}
-                    setData={setUnobtainedSkills}
-                    getGridItemClassName={getGridItemClassName}
-                    handleClick={handleAddSkill}
-                    showAddButton={false}
-                    handleDelete={null}/>
+                    <PlainListData title="Select Skills" data={unobtainedSkills} setData={setUnobtainedSkills} isPending={null} error={getfunnytext()} getGridItemClassName={getGridItemClassName} handleClick={handleAddSkill} handleDelete={null}/>
                 </div>
             </div>
                 

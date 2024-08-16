@@ -48,7 +48,7 @@ const Skill = () => {
                     <div className="details-container">
                         <div className="details-header">
                             <h1>{this_skill.name}</h1>
-                            <span>Added at: {new Date(this_skill.dateCreated).toLocaleDateString()}</span>
+                            <span>Added at: {new Date(this_skill.createdAt).toLocaleDateString('el-GR')}</span>
                         </div>
                                                 
                         <div className="details-content">

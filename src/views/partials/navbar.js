@@ -37,6 +37,12 @@ const Navbar = () => {
                         <li><Link to="/employee_list">List Employees</Link></li>
                     </ul>
                 </li>
+                <li className="menu-item"> 
+                    <Link to="/downloads">Downloads</Link>
+                </li>
+
+
+
             </ul>
         </nav>
     );

@@ -53,8 +53,8 @@ const EmployeesList = () => {
     //search results - filter original results from backend -- useMemo given by AI to remove warning
     const filteredData = useMemo(() => (
         EmployeesData ? EmployeesData.filter(item =>
-            item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.surname.toLowerCase().includes(searchQuery.toLowerCase())
+            item.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.lastName.toLowerCase().includes(searchQuery.toLowerCase())
         ) : []
     ), [EmployeesData, searchQuery]);
 
@@ -63,13 +63,13 @@ const EmployeesList = () => {
     const sortData = useCallback((data) => {
         const sortedList = [...data];
         if (isSortedSurAsc) {
-            sortedList.sort((a, b) => a.surname.localeCompare(b.surname));
+            sortedList.sort((a, b) => a.surname.localeCompare(b.lastName));
         } else if (isSortedSurDe) {
-            sortedList.sort((a, b) => b.surname.localeCompare(a.surname));
+            sortedList.sort((a, b) => b.surname.localeCompare(a.lastName));
         } else if (isSortedHireAsc) {
-            sortedList.sort((a, b) => new Date(a.dateAdded) - new Date(b.dateAdded));
+            sortedList.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
         } else if (isSortedHireDe) {
-            sortedList.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+            sortedList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         }
         return sortedList;
     }, [isSortedSurAsc, isSortedSurDe, isSortedHireAsc, isSortedHireDe]);
@@ -118,7 +118,7 @@ const EmployeesList = () => {
                 {sortedEmployeesData && sortedEmployeesData.map((employee) => (
                     <div key={employee._id} className="grid-item">
                     <Link to={`/employee/${employee._id}`}>
-                        <h2>{employee.name} {employee.surname}</h2>
+                        <h2>{employee.firstName} {employee.lastName}</h2>
                         <p>Click for Details!</p>
                     </Link>
                     </div>

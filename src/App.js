@@ -8,13 +8,14 @@ import Home from './views/home'
 import Skill from './views/skill_views/skill';
 import SkillsList from './views/skill_views/skills_list';
 import AddSkill from './views/skill_views/add_skill';
-import EditSkill from './views/skill_views/edit_skill'
 //import employee views
 import AddEmployee from './views/employee_views/add_employee';
 import EmployeesList from './views/employee_views/emloyees_list';
 import Employee from './views/employee_views/employee';
 //import partials
 import Navbar from './views/partials/navbar';
+//import other
+import Downloads from './views/other/downloads';
 
 function App() {
   return (
@@ -37,10 +38,6 @@ function App() {
           <Skill/>
         </Route>
 
-        <Route exact path="/edit-skill/:id">
-          <Skill/>
-        </Route>
-
         <Route exact path="/add-employee">
           <AddEmployee/>
         </Route>
@@ -51,6 +48,10 @@ function App() {
 
         <Route exact path="/employee/:id">
           <Employee/>
+        </Route>
+
+        <Route exact path="/downloads">
+          <Downloads/>
         </Route>
 
 

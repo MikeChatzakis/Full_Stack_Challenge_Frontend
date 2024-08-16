@@ -248,6 +248,7 @@
 .grid-item-no-effects {
   cursor: pointer;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -275,6 +276,11 @@
 .grid-item a {
   text-decoration: none;
   color: #333;
+}
+
+.grid-item span{
+  font-size: 1em;
+  color: #9f9d9d; /* Optional: makes the date less prominent */
 }
 
 .grid-item:hover {
@@ -411,4 +417,49 @@
 .search-container:hover .search-bar {
   display: block;
   opacity: 1;
+}
+/* -------------------------------- */
+/* Download buttons styles */
+
+.downloads-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center horizontally */
+  align-items:center;     /* Center vertically */
+  height: 50vh;
+  text-align: center;
+  margin: 50px;
+}
+
+.downloads-container h2 {
+  font-weight: bold;
+  color: rgb(30, 88, 25);
+  font-size: 2.5em;
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+}
+
+.downloads-container .button-container button {
+  color: rgb(30, 88, 25);
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center; /* Center text inside button */
+  align-items: center;     /* Center text inside button */
+  width: 200px;            
+  height: 200px;           
+  margin: 10px;            /* Space between buttons */
+  border-radius:50%;      /* Slightly rounded corners */
+  background-color: #e7f7e9;
+  color: black;            /* Text color */
+  text-align: center;      /* Center text horizontally */
+  cursor: pointer;         /* Change cursor on hover */
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth color transition */
+}
+
+.downloads-container button:hover {
+  background: #f7edbf; /* Darker background color on hover */
+  border-color: #ccc;     /* Darker border color on hover */
 }

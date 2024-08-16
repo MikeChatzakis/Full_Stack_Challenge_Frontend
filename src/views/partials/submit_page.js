@@ -11,8 +11,6 @@ const SubmitPage = ({title, url , data, setData, setResult, method}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsPending(true);
-        console.log("data here:");
-        console.log(url);
 
         fetch(url,{
             method: method,
@@ -30,7 +28,7 @@ const SubmitPage = ({title, url , data, setData, setResult, method}) => {
             console.log(error);
         })
     }
-    const keysToFilterOut = ['_id', '__v', 'dateCreated', 'dateAdded'];
+    const keysToFilterOut = ['_id', '__v', 'createdAt', 'updatedAt'];
 
     return (
             <div className="newSkill">
@@ -41,12 +39,15 @@ const SubmitPage = ({title, url , data, setData, setResult, method}) => {
                     .map(key => (                                   //iterate over all keys 
                         <div key={key} className='newSkillData'>
                             <label>{key}:</label>
-                            {key !== 'details' ? (
-                            <input type='text' required value={data[key]} onChange={(e) => setData(prevData => ({...prevData,[key]:e.target.value}))} placeholder={`Type ${key} here...`}></input>
-                            ):(
-                            <textarea type='text' cols="50" rows="10" required value={data[key]} onChange={(e) => setData(prevData => ({...prevData,[key]:e.target.value}))} placeholder={`Type ${key} here...`}></textarea>
-                            )}
-
+                            {
+                               key === 'details' ? (
+                                <textarea type='text' cols="50" rows="10" required value={data[key]} onChange={(e) => setData(prevData => ({...prevData,[key]:e.target.value}))} placeholder={`Type ${key} here...`}></textarea>
+                               ) : key === 'dateOfBirth' ? (                                
+                                <input type='date' required value={new Date(data[key]).toISOString().split('T')[0]} onChange={(e) => setData(prevData => ({...prevData,[key]:e.target.value}))} placeholder={`Select Date`}></input>
+                            ) : (
+                                <input type='text' required value={data[key]} onChange={(e) => setData(prevData => ({...prevData,[key]:e.target.value}))} placeholder={`Type ${key} here...`}></input>
+                               )
+                            }
                         </div>
                     ))}
                     <button type="submit" disabled={isPending}> {isPending ? 'Submitting...' : 'Submit'} </button>
