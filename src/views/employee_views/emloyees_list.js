@@ -9,6 +9,11 @@ const EmployeesList = () => {
 
     const {data: EmployeesData, isPending, error: Error} = useFetch('http://localhost:3002/api/Employees_list');
 
+    const {data: allSkillData} = useFetch('http://localhost:3002/api/Skills_list');
+    const {data: allRelations} = useFetch('http://localhost:3002/api/AllEmployeesAllSkills');
+
+    const [selectedSkills,setSelectedSkills] = useState([]);
+
     const [sortedEmployeesData, setSortedEmployeesData] = useState([]);
 
     const [isSortedSurAsc, setIsSortedSurAsc] = useState(false);
@@ -50,22 +55,43 @@ const EmployeesList = () => {
         setIsSortedHireDe(true);
     }
 
+    const selectedSkillIds = useMemo(() => new Set(selectedSkills.map(skill => skill._id)), [selectedSkills]);
     //search results - filter original results from backend -- useMemo given by AI to remove warning
-    const filteredData = useMemo(() => (
-        EmployeesData ? EmployeesData.filter(item =>
-            item.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.lastName.toLowerCase().includes(searchQuery.toLowerCase())
-        ) : []
-    ), [EmployeesData, searchQuery]);
+    const filteredData = useMemo(() => {
+        
+        if (!EmployeesData || !allRelations) return [];
+        // Map relations to get the skills of each employee
+        const employeeSkillsMap = allRelations.reduce((map, relation) => {
+            if (!map[relation.employee]) {
+                map[relation.employee] = new Set();
+            }
+            map[relation.employee].add(relation.skill);
+            return map;
+        }, {});
+
+        return EmployeesData
+            .filter(employee => {
+                if(selectedSkillIds.size===0){
+                    return true;
+                }
+                const employeeSkills = employeeSkillsMap[employee._id] || new Set();
+                return Array.from(selectedSkillIds).every(skillId => employeeSkills.has(skillId));
+                
+            })
+            .filter(item =>
+                item.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.lastName.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+    }, [EmployeesData, allRelations, selectedSkillIds, searchQuery]);
 
     //sorted results - sort among filtered results from the search query -- useCallback given by AI to remove warning
 
     const sortData = useCallback((data) => {
         const sortedList = [...data];
         if (isSortedSurAsc) {
-            sortedList.sort((a, b) => a.surname.localeCompare(b.lastName));
+            sortedList.sort((a, b) => a.lastName.localeCompare(b.lastName));
         } else if (isSortedSurDe) {
-            sortedList.sort((a, b) => b.surname.localeCompare(a.lastName));
+            sortedList.sort((a, b) => b.lastName.localeCompare(a.lastName));
         } else if (isSortedHireAsc) {
             sortedList.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
         } else if (isSortedHireDe) {
@@ -78,6 +104,19 @@ const EmployeesList = () => {
     useEffect(() => {
         setSortedEmployeesData(sortData(filteredData));
     }, [filteredData, sortData]);
+
+    //-------------------------------------------------
+    const handleCheckboxChange = (item) => {
+        setSelectedSkills((prevSelectedSkills) => {
+            if (prevSelectedSkills.includes(item)) {
+                // If item is already in the selectedItems array, remove it
+                return prevSelectedSkills.filter(i => i !== item);
+            } else {
+                // If item is not in the selectedItems array, add it
+                return [...prevSelectedSkills, item];
+            }
+        });
+    };
 
     return (
         <div className="container">
@@ -99,6 +138,22 @@ const EmployeesList = () => {
                         <li> <button onClick= {orderHireDescending} disabled={isSortedHireDe}>Descending</button> </li>
                     </ul>
                 </li>
+
+                <li className="menu-item dropdown">
+                    <span className='dropdown-toggle'>Select Skills</span>
+                    <ul className="dropdown-menu">
+                        {allSkillData && allSkillData.map(skill =>(
+                            <li key={skill._id}>
+                                <div className='dropdown-menu-extra'>
+                                    <input type='checkbox' id={skill._id} checked={selectedSkills.includes(skill)} onChange={() => handleCheckboxChange(skill)}/>
+                                    <label htmlFor={`checkbox-${skill._id}`}>{skill.name}</label>
+                                </div>
+                            </li>
+                            
+                        ))}
+                    </ul>
+                </li>
+
                 <li className="menu-item">
                     <div className="search-container">
                         <div className="search-icon">

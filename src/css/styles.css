@@ -97,6 +97,24 @@
 
 }
 
+.dropdown-menu li .dropdown-menu-extra {
+  display: flex;
+  flex-direction: row;
+  min-width: 100px;
+}
+
+.dropdown-menu li .dropdown-menu-extra input[type="checkbox"] {
+  margin-right: 10px;
+  
+  padding: 0px;
+  margin: 1px;
+  border: none;
+}
+
+.dropdown-menu li .dropdown-menu-extra label {
+  flex-grow: 1;
+  cursor: pointer;
+}
 /* ------------------------------------NEW STYLES ------------------------------------*/
 
 /* ----------add Skill styles ----------*/
