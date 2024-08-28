@@ -87,7 +87,7 @@ const PlainListData = ({title, data, setData, error, isPending, getGridItemClass
                         </div>}
                     </div>
                 ))}
-                {/* Add button would go here if we want it */}
+                {/* Popup add button would go here if we want it */}
             </div>
         </div>
     )

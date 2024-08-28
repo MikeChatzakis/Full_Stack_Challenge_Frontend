@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-
 /* base styles */
 * {
   margin: 0;
@@ -14,10 +13,18 @@
   margin: 0 auto;
   border-bottom: 1px solid #f2f2f2;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   color: white;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column; /* Change to column direction for small screens */
+    align-items: center; /* Center items horizontally in column layout */
+  }
 }
 
 .navbar-title {
@@ -32,11 +39,12 @@
   margin: 0;
   display: flex;
   align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .menu-item {
   position: relative;
-
 }
 
 .menu-item a,
@@ -50,14 +58,13 @@
 }
 
 .menu-item a:hover,
-.dropdown-toggle:hover {
+.dropdown-toggle:hover{
   background-color: #dad5d5;
 }
 
 .dropdown-menu {
  
-  overflow: hidden; /* Hide overflowing content */
-  /* background-color: #d8f3db; */
+  overflow: hidden; 
   background-color: #f7edbf;
   list-style: none;
   padding: 0;
@@ -89,7 +96,8 @@
 }
 
 /* Show dropdown menu on hover */
-.menu-item.dropdown:hover .dropdown-menu {
+.menu-item.dropdown:hover .dropdown-menu,
+.menu-item.dropdown:focus .dropdown-menu {
   padding: 5px;
   max-height: 200px;
   opacity: 1; /* Make visible */
@@ -115,25 +123,39 @@
   flex-grow: 1;
   cursor: pointer;
 }
+
+@media (max-width: 400px) {
+  .menu {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .menu-item {
+    flex: 0 0 48%; /* Make each item take up approximately half the width of the container */
+    box-sizing: border-box; /* Include padding and borders in width */
+    margin-bottom: 4%; /* Space between items in column layout */
+  }
+
+
+}
 /* ------------------------------------NEW STYLES ------------------------------------*/
 
 /* ----------add Skill styles ----------*/
-/* body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-} */
+
 .newSkill_wrapper {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  /* align-items:center; */
-  padding: 20px;
   flex-direction:row;
-  
+  justify-content: center; 
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .newSkill_wrapper {
+    flex-direction: column; /* Change to column direction for small screens */
+    align-items: center; /* Center items horizontally in column layout */
+  }
 }
 
 .newSkill {
@@ -141,8 +163,10 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .newSkill h2 {
@@ -153,7 +177,6 @@
 }
 
 .newSkill form {
-
   display: flex;
   flex-direction: column;
 }
@@ -164,20 +187,15 @@
   text-align: center;
 }
 
-.newSkill input {
-  padding: 10px 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1em;
-}
-
+.newSkill input,
 .newSkill textarea {
   padding: 10px 12px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1em;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .newSkill button {
@@ -189,6 +207,8 @@
   cursor: pointer;
   font-size: 16px;
   margin: 2px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .newSkillData {
@@ -196,7 +216,8 @@
   flex-direction: column;
 }
 
-.newSkill button:hover {
+.newSkill button:hover,
+.newSkill button:focus {
   background-color: #218838;
 }
 
@@ -218,8 +239,10 @@
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
-  max-width: 500px;
-  width: 100%;
+  width: 500px;
+  max-width: 90%;
+  max-height: 80vh;
+  overflow: auto;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   position: relative;
 }
@@ -229,7 +252,8 @@
 }
 
 .popup-content button {
-  margin-top: 10px;
+  margin: 10px auto;
+  display: block;
 }
 
 /* ----------List Skill styles ----------*/
@@ -241,7 +265,6 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin: 0 auto;
   padding: 20px;
 }
 
@@ -261,6 +284,12 @@
   max-width: 600px; /* Optional: limits the width of the grid */
 }
 
+@media (max-width: 400px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Styling for each grid item */
 .grid-item,
 .grid-item-no-effects {
@@ -276,12 +305,25 @@
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.grid-item h2,
+.grid-item-no-effects h2{
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: clamp(1rem, 1.5vw + 0.8rem,1.7rem);
+    text-align: center;
+}
+
 .grid-item-no-effects {
   background-color: #90f9fd;
   transition: transform 1.5s ease;
 }
 
-.grid-item-no-effects:hover {
+.grid-item-no-effects:hover,
+.grid-item-no-effects:focus {
   transform: rotateY(180deg);
 }
 
@@ -294,6 +336,12 @@
 .grid-item a {
   text-decoration: none;
   color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .grid-item span{
@@ -301,7 +349,8 @@
   color: #9f9d9d; /* Optional: makes the date less prominent */
 }
 
-.grid-item:hover {
+.grid-item:hover
+.grid-item:focus {
   transform: scale(1.1);
   /* transition: transform 0.2s; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
@@ -321,7 +370,8 @@
 }
 
 /* Show the overlay when the item is hovered */
-.grid-item:hover .delete-overlay {
+.grid-item:hover .delete-overlay,
+.grid-item:focus .delete-overlay {
   width: 33%; /* Show the overlay on hover */
 }
 
@@ -336,7 +386,8 @@
 }
 
 /* Show the delete button when the overlay is visible */
-.grid-item:hover .delete-overlay button {
+.grid-item:hover .delete-overlay button,
+.grid-item:focus .delete-overlay button {
   display: block; /* Show the button on hover */
 }
 
@@ -432,7 +483,8 @@
 }
 
 /* Show the search bar when hovering over the container */
-.search-container:hover .search-bar {
+.search-container:hover .search-bar,
+.search-container:focus .search-bar {
   display: block;
   opacity: 1;
 }
@@ -444,9 +496,10 @@
   flex-direction: column;
   justify-content: center; /* Center horizontally */
   align-items:center;     /* Center vertically */
-  height: 50vh;
   text-align: center;
   margin: 50px;
+  /* padding-top: 80px; */
+  box-sizing: border-box;
 }
 
 .downloads-container h2 {
@@ -477,7 +530,15 @@
   transition: background-color 0.3s, border-color 0.3s; /* Smooth color transition */
 }
 
-.downloads-container button:hover {
+@media (max-width: 600px) {
+  .button-container {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+.downloads-container button:hover,
+.downloads-container button:focus {
   background: #f7edbf; /* Darker background color on hover */
   border-color: #ccc;     /* Darker border color on hover */
 }

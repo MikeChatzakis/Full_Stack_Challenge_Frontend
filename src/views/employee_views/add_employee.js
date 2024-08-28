@@ -71,13 +71,13 @@ const AddEmployee = () => {
 
     return (
         <div className='newSkill_wrapper'>           
-            <div>
-                <SubmitPage title="Add Employee" url="http://localhost:3002/api/addEmployee" data={newEmployee} setData={setNewEmployee} setResult={setCreatedEmployee} method='POST'/>
-            </div>
 
-            <div>
+                <SubmitPage title="Add Employee" url="http://localhost:3002/api/addEmployee" data={newEmployee} setData={setNewEmployee} setResult={setCreatedEmployee} method='POST'/>
+
+
+
                 <PlainList title="Select Skills" url='http://localhost:3002/api/Skills_list' getGridItemClassName={getGridItemClassName} handleClick={handleAddSkill} showAddButton={true} handleDelete={null}/>
-            </div>
+
         </div>
 
     )

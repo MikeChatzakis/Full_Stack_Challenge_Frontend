@@ -42,8 +42,8 @@ const SubmitPage = ({title, url , data, setData, setResult, method}) => {
                             {
                                key === 'details' ? (
                                 <textarea type='text' cols="50" rows="10" required value={data[key]} onChange={(e) => setData(prevData => ({...prevData,[key]:e.target.value}))} placeholder={`Type ${key} here...`}></textarea>
-                               ) : key === 'dateOfBirth' ? (                                
-                                <input type='date' required value={new Date(data[key]).toISOString().split('T')[0]} onChange={(e) => setData(prevData => ({...prevData,[key]:e.target.value}))} placeholder={`Select Date`}></input>
+                               ) : key === 'dateOfBirth' ? (           
+                                <input type='date' required value={data[key] ? new Date(data[key]).toISOString().split('T')[0]:''} onChange={(e) => setData(prevData => ({...prevData,[key]:e.target.value || ''}))}></input>                     
                             ) : (
                                 <input type='text' required value={data[key]} onChange={(e) => setData(prevData => ({...prevData,[key]:e.target.value}))} placeholder={`Type ${key} here...`}></input>
                                )

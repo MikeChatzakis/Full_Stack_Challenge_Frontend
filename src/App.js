@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-
 //general views import
 import Home from './views/home'
 //import skill views
@@ -22,45 +21,24 @@ function App() {
     <Router>
       <Navbar/>
       <Switch>
-        <Route exact path="/">
-          <Home/>
-        </Route>
+        <Route exact path="/"> <Home/> </Route>
 
-        <Route exact path="/add-skill">
-          <AddSkill />
-        </Route>
+        <Route exact path="/add-skill"> <AddSkill /> </Route>
 
-        <Route exact path="/skills_list">
-          <SkillsList/>
-        </Route>
+        <Route exact path="/skills_list"> <SkillsList/> </Route>
 
-        <Route exact path="/skill/:id">
-          <Skill/>
-        </Route>
+        <Route exact path="/skill/:id"> <Skill/> </Route>
 
-        <Route exact path="/add-employee">
-          <AddEmployee/>
-        </Route>
+        <Route exact path="/add-employee"> <AddEmployee/> </Route>
 
-        <Route exact path="/employee_list">
-          <EmployeesList/>
-        </Route>
+        <Route exact path="/employee_list"> <EmployeesList/> </Route>
 
-        <Route exact path="/employee/:id">
-          <Employee/>
-        </Route>
+        <Route exact path="/employee/:id"> <Employee/> </Route>
 
-        <Route exact path="/downloads">
-          <Downloads/>
-        </Route>
+        <Route exact path="/downloads"> <Downloads/> </Route>
 
-
-        
-        {/* default route */}
-        <Route path="*">
-          <Home/>
-        </Route>
-
+        {/* Default Path */}
+        <Route path="*"> <Home/> </Route>
       </Switch>
     </Router>
   );

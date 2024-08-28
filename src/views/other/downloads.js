@@ -12,16 +12,16 @@ const Downloads = () => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
+            //get file-name from backend
             const contentDisposition = response.headers.get('Content-Disposition');
             const filename = contentDisposition ? contentDisposition.match(/filename="?([^"]+)"?/)[1] : 'download.xlsx';
             return response.blob().then(blob => ({ filename, blob }));
-            //return response.blob(); // Convert the response to a Blob
+            
         })
         .then(({ filename, blob }) => {
 
-            const url = window.URL.createObjectURL(blob); // Create a URL for the Blob
-            const link = document.createElement('a'); // Create a link element
+            const url = window.URL.createObjectURL(blob); 
+            const link = document.createElement('a'); 
             link.href = url;
             link.download = filename; // Set the filename for the downloaded file
             document.body.appendChild(link); // Append the link to the DOM

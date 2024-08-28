@@ -23,10 +23,6 @@ const EmployeesList = () => {
 
     const [searchQuery, setSearchQuery] = useState('');
 
-    const handleSearch = (e) => {
-        setSearchQuery(e.target.value);
-    };
-
     //4 sorting methods, and also sets the corresponding flag so that the buttons cant be pressed twice
     const orderSurnameAscending= () => {
         setIsSortedSurAsc(true);
@@ -100,6 +96,7 @@ const EmployeesList = () => {
         return sortedList;
     }, [isSortedSurAsc, isSortedSurDe, isSortedHireAsc, isSortedHireDe]);
 
+    //-------------------------------------------------
     //update rendered data on every render search or sort or anything
     useEffect(() => {
         setSortedEmployeesData(sortData(filteredData));
@@ -117,7 +114,11 @@ const EmployeesList = () => {
             }
         });
     };
-
+    //-------------------------------------------------
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+    };
+    //-------------------------------------------------
     return (
         <div className="container">
             <h1 className="title">All Employess</h1>
@@ -160,7 +161,7 @@ const EmployeesList = () => {
                             <SearchIcon width={30} height={30}/>
                         </div>
                         <div className="search-bar">
-                            <input type="text" placeholder="Search..." value={searchQuery} onChange={handleSearch} />
+                            <input type="text" placeholder="Search..." value={searchQuery} onChange={(handleSearch)} />
                         </div>
                     </div>
                 </li>
