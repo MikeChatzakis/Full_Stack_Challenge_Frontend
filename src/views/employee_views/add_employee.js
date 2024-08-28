@@ -25,7 +25,7 @@ const AddEmployee = () => {
     //when the employee is created trigger another fetch request to make the employee-skill relations in the DB
     useEffect(()=>{
         if(createdEmployee){
-            const secondFetchData = {newUserID:createdEmployee._id,EmployeeSkills};            
+            const secondFetchData = {newUserID:createdEmployee._id,EmployeeSkills};
             fetch('http://localhost:3002/api/addManyEmpSkills',{
                     method: 'POST',
                     headers: {"Content-type": "application/json"},
@@ -34,7 +34,7 @@ const AddEmployee = () => {
                 .then(res => res.json())
                 .then( () => {
                     //  setIsPending(false);
-                    history.push('/');
+                    history.push('/employee/' + createdEmployee._id);
                 })
                 .catch((err) =>{
                     //setError(err.message);
@@ -73,8 +73,6 @@ const AddEmployee = () => {
         <div className='newSkill_wrapper'>           
 
                 <SubmitPage title="Add Employee" url="http://localhost:3002/api/addEmployee" data={newEmployee} setData={setNewEmployee} setResult={setCreatedEmployee} method='POST'/>
-
-
 
                 <PlainList title="Select Skills" url='http://localhost:3002/api/Skills_list' getGridItemClassName={getGridItemClassName} handleClick={handleAddSkill} showAddButton={true} handleDelete={null}/>
 

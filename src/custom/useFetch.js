@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 
-const useFetch = (url) => {
+const useFetch = (url, options = {}) => {
 
     const [data, setData] = useState(null);
     const [isPending, setIsPending] = useState(true);
@@ -9,7 +9,8 @@ const useFetch = (url) => {
     useEffect(() => {
         const abortCont = new AbortController();
         setTimeout(() => {
-          fetch(url,{signal: abortCont.signal})
+          setIsPending(true);
+          fetch(url, {...options,signal: abortCont.signal})   //options are in the hook but we are not using them at the moment.
           .then(res => {
             if (!res.ok) { // error coming back from server
               return res.json().then(errData => {
@@ -27,22 +28,21 @@ const useFetch = (url) => {
             setIsPending(false);
             // auto catches network / connection error
             switch(err.name){
-                case 'AbortError':
-                    console.log('fetch Aborted');
-                break;
-                case 'NetworkError':
-                    console.log('Network Error');
-                    setError(err.message);
-                break;
-                case 'FetchError':
-                    console.log('Fetch Error');
-                    setError(err.message);
-                break;
-                default:
-                    setError(err.message);
+              case 'AbortError':
+                  console.log('fetch Aborted');
+              break;
+              case 'NetworkError':
+                  console.log('Network Error');
+                  setError(err.message);
+              break;
+              case 'FetchError':
+                  console.log('Fetch Error');
+                  setError(err.message);
+              break;
+              default:
+                  setError(err.message);
             }
           })
-        //  },1000);
          },);
 
         //cleanup
@@ -53,7 +53,5 @@ const useFetch = (url) => {
 
       return {data,isPending,error};
 }
-
-
 
 export default useFetch;

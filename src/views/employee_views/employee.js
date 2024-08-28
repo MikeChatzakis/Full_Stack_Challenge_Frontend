@@ -36,17 +36,19 @@ const Employee = () => {
         fetch('http://localhost:3002/api/employee/' + id, {
             method: 'DELETE'
         }).then(() => {
-            history.push('/');
-        });
+            history.push('/employee_list');
+        }).catch(err => {
+            console.log(err.message);
+        })
     }, [id, history]);
 
     const handleDeleteRelation = useCallback((skill_id) => {
         const delete_url = 'http://localhost:3002/api/EmployeeSkillDelete?emp_key=' + id + '&skill_key=' + skill_id;
         fetch(delete_url, {
             method: 'DELETE'
-        }).then(() => {
-            // Optionally, you can refresh the employee skills here if needed
-        });
+        }).catch(err => {
+            console.log(err.message);
+        })
     }, [id]);
 
     const switchEdit = useCallback(() => {
@@ -88,6 +90,8 @@ const Employee = () => {
             body: JSON.stringify(secondFetchData)
         }).then(res => res.json())
             .then(() => {
+                //this here is done to display the new added skills after editing an employee without the need for a new fetch request to get the data. 
+                //The rendered object is updated with the added data and then the display is switched to view mode
                 const SelectedSkillsWithDateAdded = selectedSkills.map(skill => ({ ...skill, dateAdded: new Date() }));
                 setEmployeeSkills(prevSkills => [...prevSkills, ...SelectedSkillsWithDateAdded]);
                 setSelectedSkills([]);

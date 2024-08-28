@@ -28,7 +28,7 @@ const Skill = () => {
         method: 'DELETE'
         })
         .then(() => {
-            history.push('/');
+            history.push('/skills_list');
         })
 
     };

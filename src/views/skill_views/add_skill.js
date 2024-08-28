@@ -9,8 +9,8 @@ const AddSkill = () => {
 
     const history=useHistory();
 
-    const AfterSubmit = () =>{
-        history.push('/');
+    const AfterSubmit = (createdSkill) =>{
+        history.push('/skill/'+ createdSkill._id);
     }
 
     return (
