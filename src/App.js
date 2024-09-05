@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 //general views import
 import Home from './views/home'
 //import skill views
@@ -16,29 +16,32 @@ import Navbar from './views/partials/navbar';
 //import other
 import Downloads from './views/other/downloads';
 
+import { useAuthHeader, useAuthUser } from 'react-auth-kit';
+import ProtectedRoute from './custom/ProtectedRoute';
+
 function App() {
   return (
     <Router>
       <Navbar/>
       <Switch>
-        <Route exact path="/"> <Home/> </Route>
+        <Route exact path="/" component={Home} />
 
-        <Route exact path="/add-skill"> <AddSkill /> </Route>
+        <ProtectedRoute exact path="/add-skill" component={AddSkill} />
 
-        <Route exact path="/skills_list"> <SkillsList/> </Route>
+        <ProtectedRoute exact path="/skills_list" component={SkillsList} />
 
-        <Route exact path="/skill/:id"> <Skill/> </Route>
+        <ProtectedRoute exact path="/skill/:id" component={Skill} />
 
-        <Route exact path="/add-employee"> <AddEmployee/> </Route>
+        <ProtectedRoute exact path="/add-employee" component={AddEmployee} />
 
-        <Route exact path="/employee_list"> <EmployeesList/> </Route>
+        <ProtectedRoute exact path="/employee_list" component={EmployeesList} />
 
-        <Route exact path="/employee/:id"> <Employee/> </Route>
+        <ProtectedRoute exact path="/employee/:id" component={Employee} />
 
-        <Route exact path="/downloads"> <Downloads/> </Route>
+        <ProtectedRoute exact path="/downloads" component={Downloads} />
 
         {/* Default Path */}
-        <Route path="*"> <Home/> </Route>
+        <Route path="*"> <Redirect to="/" /> </Route>
       </Switch>
     </Router>
   );

@@ -9,7 +9,7 @@
 /* ----------navbar new ----------*/
 
 .navbar {
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
   border-bottom: 1px solid #f2f2f2;
   display: flex;
@@ -49,12 +49,18 @@
 
 .menu-item a,
 .dropdown-toggle,
-.dropdown-toggle-2 {
+.dropdown-toggle-2,
+.menu-item.green-item{
   display: block;
   padding: 15px 20px;
   color: rgb(30, 88, 25);
   text-decoration: none;
   border-radius: 8px;
+}
+
+.menu-item.green-item{
+  cursor: pointer;
+  background-color: #f7edbf;
 }
 
 .menu-item a:hover,
@@ -541,4 +547,97 @@
 .downloads-container button:focus {
   background: #f7edbf; /* Darker background color on hover */
   border-color: #ccc;     /* Darker border color on hover */
+}
+
+
+/* Authentication Form */
+
+/* General Reset */
+/* body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+} */
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px);
+  background: #f0f0f0;
+}
+
+.auth-form-wrapper {
+  position:relative;
+  width: 80%;
+  max-width: 600px;
+  height: 300px;
+  display: flex;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.auth-form-container {
+  display: flex;
+  width: 200%;
+  transition: transform 0.6s ease-in-out;
+}
+
+.auth-login-form,
+.auth-signup-form {
+  width: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+  background: white;
+  border: 1px solid #ddd;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.auth-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.auth-button:hover {
+  background: #0056b3;
+}
+
+.auth-toggle-text {
+  cursor: pointer;
+  color: #007bff;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.auth-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgb(30,88,25), #f7edbf);
+  z-index: 1;
+  transition: transform 0.6s ease-in-out;
+}
+
+.auth-container.show-signup .auth-cover {
+  transform: translateX(0%); 
+}
+
+.auth-container.show-login .auth-cover {
+  transform: translateX(+100%); 
 }

@@ -1,6 +1,26 @@
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+
+
+
+
+
+
 
 const Navbar = () => {
+
+    const isAuthenticated = useIsAuthenticated();
+    const signOut = useSignOut();
+    const history = useHistory();
+
+    const handleLogOut = () => {
+        signOut();
+        window.location.reload();
+        history.push('/');
+    }
+
     return (  
         <nav className="navbar">
             <div className="navbar-title">Dashboard</div>
@@ -26,6 +46,10 @@ const Navbar = () => {
                 <li className="menu-item"> 
                     <Link to="/downloads">Downloads</Link>
                 </li>
+                {isAuthenticated && 
+                <li className="menu-item green-item">
+                    <span onClick={handleLogOut}>Logout</span>
+                </li>}
 
 
 

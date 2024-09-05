@@ -15,6 +15,7 @@ const SubmitPage = ({title, url , data, setData, setResult, method}) => {
         fetch(url,{
             method: method,
             headers: {"Content-type": "application/json"},
+            credentials:'include',
             body: JSON.stringify(data)
         })
         .then(res => res.json())

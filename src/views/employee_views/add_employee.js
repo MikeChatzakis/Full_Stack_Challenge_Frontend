@@ -29,6 +29,7 @@ const AddEmployee = () => {
             fetch('http://localhost:3002/api/addManyEmpSkills',{
                     method: 'POST',
                     headers: {"Content-type": "application/json"},
+                    credentials:'include',
                     body: JSON.stringify(secondFetchData)
                 })
                 .then(res => res.json())

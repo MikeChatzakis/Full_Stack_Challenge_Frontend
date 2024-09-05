@@ -34,7 +34,8 @@ const Employee = () => {
 
     const handleDelete = useCallback(() => {
         fetch('http://localhost:3002/api/employee/' + id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            credentials:'include'
         }).then(() => {
             history.push('/employee_list');
         }).catch(err => {
@@ -45,7 +46,8 @@ const Employee = () => {
     const handleDeleteRelation = useCallback((skill_id) => {
         const delete_url = 'http://localhost:3002/api/EmployeeSkillDelete?emp_key=' + id + '&skill_key=' + skill_id;
         fetch(delete_url, {
-            method: 'DELETE'
+            method: 'DELETE',
+            credentials:'include'
         }).catch(err => {
             console.log(err.message);
         })
@@ -87,6 +89,7 @@ const Employee = () => {
         fetch('http://localhost:3002/api/addManyEmpSkills', {
             method: 'POST',
             headers: { "Content-type": "application/json" },
+            credentials:'include',
             body: JSON.stringify(secondFetchData)
         }).then(res => res.json())
             .then(() => {

@@ -25,7 +25,8 @@ const Skill = () => {
 
     const handleDelete= () => {
         fetch('http://localhost:3002/api/skill/'+id, { 
-        method: 'DELETE'
+        method: 'DELETE',
+        credentials:'include'
         })
         .then(() => {
             history.push('/skills_list');
