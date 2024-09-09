@@ -3,10 +3,9 @@ import useFetch from '../../custom/useFetch';
 
 const SkillsList = () => {
 
-    const {data, isPending, error} = useFetch('http://localhost:3002/api/Skills_list');
+    const {data, isPending, error} = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Skills_list`);
     
     return(
-
         <div className="container">
             <h1 className="title">All Skills</h1>
             {isPending && <h2>Loading Skills...</h2>}

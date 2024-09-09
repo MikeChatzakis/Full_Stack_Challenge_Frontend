@@ -38,9 +38,9 @@ const Downloads = () => {
         <div className='downloads-container'>
             <h2>Download Excel Files</h2>
             <div className='button-container'>
-            <button onClick={()=>HandleClick('http://localhost:3002/api/employee_excel','employees')}><b>Employees</b></button>
-            <button onClick={()=>HandleClick('http://localhost:3002/api/skill_excel','skills')}><b>Skills</b></button>
-            <button onClick={() => HandleClick('http://localhost:3002/api/EmpSkillExcel','emp-skill')}><b>Employee-Skill Relations</b></button>
+            <button onClick={()=>HandleClick(`${process.env.REACT_APP_SERVER_URL}/api/employee_excel`,'employees')}><b>Employees</b></button>
+            <button onClick={()=>HandleClick(`${process.env.REACT_APP_SERVER_URL}/api/skill_excel`,'skills')}><b>Skills</b></button>
+            <button onClick={() => HandleClick(`${process.env.REACT_APP_SERVER_URL}/api/EmpSkillExcel`,'emp-skill')}><b>Employee-Skill Relations</b></button>
             </div>
         </div>
     );

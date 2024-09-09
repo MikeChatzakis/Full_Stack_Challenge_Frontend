@@ -3,20 +3,20 @@ import './App.css';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 //general views import
 import Home from './views/home'
-//import skill views
+//import skill components
 import Skill from './views/skill_views/skill';
 import SkillsList from './views/skill_views/skills_list';
 import AddSkill from './views/skill_views/add_skill';
-//import employee views
+//import employee components
 import AddEmployee from './views/employee_views/add_employee';
 import EmployeesList from './views/employee_views/emloyees_list';
 import Employee from './views/employee_views/employee';
-//import partials
+//import partial components
 import Navbar from './views/partials/navbar';
-//import other
+//import other components
 import Downloads from './views/other/downloads';
-
-import { useAuthHeader, useAuthUser } from 'react-auth-kit';
+import Login from './views/other/login';
+//import helper routing functions
 import ProtectedRoute from './custom/ProtectedRoute';
 
 function App() {
@@ -25,6 +25,8 @@ function App() {
       <Navbar/>
       <Switch>
         <Route exact path="/" component={Home} />
+
+        <Route exact path ="/login" component={Login} />
 
         <ProtectedRoute exact path="/add-skill" component={AddSkill} />
 

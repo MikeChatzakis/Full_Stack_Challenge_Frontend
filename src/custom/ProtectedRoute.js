@@ -12,11 +12,13 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
         isAuthenticated ? ( // Use isAuthenticated directly
           <Component {...props} />
         ) : (
-          <Redirect to="/" />
+          <Redirect to="/login" />
         )
       }
     />
   );
 };
+
+
 
 export default ProtectedRoute;

@@ -13,9 +13,9 @@ const Employee = () => {
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [editMode, setEditMode] = useState(false);
 
-    const { data, isPending, error } = useFetch('http://localhost:3002/api/employee/' + id);
-    const { data: thisEmpSkillData, isPending: isPendingSkill, error: errorSkill } = useFetch('http://localhost:3002/api/SingleEmployeeAllSkills/' + id);
-    const { data: allSkillData } = useFetch('http://localhost:3002/api/Skills_list');
+    const { data, isPending, error } = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/employee/` + id);
+    const { data: thisEmpSkillData, isPending: isPendingSkill, error: errorSkill } = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/SingleEmployeeAllSkills/` + id);
+    const { data: allSkillData } = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Skills_list`);
 
     useEffect(() => {
         if (data) setThisEmployee(data);
@@ -33,7 +33,7 @@ const Employee = () => {
     }, [employeeSkills, allSkillData]);
 
     const handleDelete = useCallback(() => {
-        fetch('http://localhost:3002/api/employee/' + id, {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/employee/` + id, {
             method: 'DELETE',
             credentials:'include'
         }).then(() => {
@@ -44,7 +44,7 @@ const Employee = () => {
     }, [id, history]);
 
     const handleDeleteRelation = useCallback((skill_id) => {
-        const delete_url = 'http://localhost:3002/api/EmployeeSkillDelete?emp_key=' + id + '&skill_key=' + skill_id;
+        const delete_url = `${process.env.REACT_APP_SERVER_URL}/api/EmployeeSkillDelete?emp_key=` + id + '&skill_key=' + skill_id;
         fetch(delete_url, {
             method: 'DELETE',
             credentials:'include'
@@ -86,7 +86,7 @@ const Employee = () => {
     //----------------save employee skills-----------
     const saveEmpSkills = useCallback((emp) => {
         const secondFetchData = { newUserID: emp._id, EmployeeSkills: selectedSkills };
-        fetch('http://localhost:3002/api/addManyEmpSkills', {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/addManyEmpSkills`, {
             method: 'POST',
             headers: { "Content-type": "application/json" },
             credentials:'include',
@@ -158,7 +158,7 @@ const Employee = () => {
                         <div>
                             <SubmitPage
                                 title='Edit Employee'
-                                url={'http://localhost:3002/api/employee/' + id}
+                                url={`${process.env.REACT_APP_SERVER_URL}/api/employee/` + id}
                                 data={this_employee}
                                 setData={setThisEmployee}
                                 setResult={saveEmpSkills}

@@ -43,12 +43,12 @@ const Navbar = () => {
                         <li><Link to="/employee_list">List Employees</Link></li>
                     </ul>
                 </li>
-                <li className="menu-item"> 
+                <li className="menu-item">
                     <Link to="/downloads">Downloads</Link>
                 </li>
                 {isAuthenticated && 
-                <li className="menu-item green-item">
-                    <span onClick={handleLogOut}>Logout</span>
+                <li className="menu-item yellow-item" onClick={handleLogOut}>
+                    <span>Logout</span>
                 </li>}
 
 

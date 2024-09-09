@@ -10,8 +10,7 @@ const useFetch = (url, options = {method:'GET', credentials:'include'}) => {
         const abortCont = new AbortController();
         setTimeout(() => {
           setIsPending(true);
-          //fetch(url, {...options,signal: abortCont.signal})   //options are in the hook but we are not using them at the moment.
-          fetch(url, {...options,signal: abortCont.signal})
+          fetch(url, {...options,signal: abortCont.signal}) //options are in the hook but we are not using them at the moment.
           .then(res => {
             if (!res.ok) { // error coming back from server
               return res.json().then(errData => {

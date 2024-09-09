@@ -6,11 +6,10 @@ import{ ReactComponent as SearchIcon} from '../../css/search.svg';
 const EmployeesList = () => {
 
     // const [EmployeesData, setEmployeesData] = useState();
+    const {data: EmployeesData, isPending, error: Error} = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Employees_list`);
 
-    const {data: EmployeesData, isPending, error: Error} = useFetch('http://localhost:3002/api/Employees_list');
-
-    const {data: allSkillData} = useFetch('http://localhost:3002/api/Skills_list');
-    const {data: allRelations} = useFetch('http://localhost:3002/api/AllEmployeesAllSkills');
+    const {data: allSkillData} = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Skills_list`);
+    const {data: allRelations} = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/AllEmployeesAllSkills`);
 
     const [selectedSkills,setSelectedSkills] = useState([]);
 
