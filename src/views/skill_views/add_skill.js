@@ -15,7 +15,7 @@ const AddSkill = () => {
 
     return (
         <div className='newSkill_wrapper'>
-            <SubmitPage title="Add Skill" url={`${process.env.REACT_APP_SERVER_URL}/api/addSkill`} data={newSkill} setData={setNewSkill} setResult={AfterSubmit} method='POST'/>
+            <SubmitPage title="Add Skill" url={`${process.env.REACT_APP_SERVER_URL}/api/skills`} data={newSkill} setData={setNewSkill} setResult={AfterSubmit} method='POST'/>
         </div>
     )
 }

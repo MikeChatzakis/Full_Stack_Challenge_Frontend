@@ -26,7 +26,7 @@ const AddEmployee = () => {
     useEffect(()=>{
         if(createdEmployee){
             const secondFetchData = {newUserID:createdEmployee._id,EmployeeSkills};
-            fetch(`${process.env.REACT_APP_SERVER_URL}/api/addManyEmpSkills`,{
+            fetch(`${process.env.REACT_APP_SERVER_URL}/api/employee-skills/bulk`,{
                     method: 'POST',
                     headers: {"Content-type": "application/json"},
                     credentials:'include',
@@ -73,9 +73,9 @@ const AddEmployee = () => {
     return (
         <div className='newSkill_wrapper'>           
 
-                <SubmitPage title="Add Employee" url={`${process.env.REACT_APP_SERVER_URL}/api/addEmployee`} data={newEmployee} setData={setNewEmployee} setResult={setCreatedEmployee} method='POST'/>
+                <SubmitPage title="Add Employee" url={`${process.env.REACT_APP_SERVER_URL}/api/employees`} data={newEmployee} setData={setNewEmployee} setResult={setCreatedEmployee} method='POST'/>
 
-                <PlainList title="Select Skills" url={`${process.env.REACT_APP_SERVER_URL}/api/Skills_list`} getGridItemClassName={getGridItemClassName} handleClick={handleAddSkill} showAddButton={true} handleDelete={null}/>
+                <PlainList title="Select Skills" url={`${process.env.REACT_APP_SERVER_URL}/api/skills`} getGridItemClassName={getGridItemClassName} handleClick={handleAddSkill} showAddButton={true} handleDelete={null}/>
 
         </div>
 

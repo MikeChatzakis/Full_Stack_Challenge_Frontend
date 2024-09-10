@@ -3,7 +3,7 @@ import useFetch from '../../custom/useFetch';
 
 const SkillsList = () => {
 
-    const {data, isPending, error} = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Skills_list`);
+    const {data, isPending, error} = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/skills`);
     
     return(
         <div className="container">

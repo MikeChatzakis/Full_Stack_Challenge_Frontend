@@ -9,10 +9,9 @@ const Home = () => {
 
     return(
         <div className='home-container'>
-            
-            
+                        
             <div className='home-bear-container'>
-                <img className='home-bear' src={Home_bear} alt="Here is a bear"></img>
+                <img src={Home_bear} alt="Here is a bear"></img>
             </div>
 
             <div className='home-text'>
@@ -22,8 +21,7 @@ const Home = () => {
                     <h2><br/>You are not logged in :( <br/> <Link to="/Login">Click here</Link> to login! </h2>
                 }
             </div>
-            
-            
+                        
         </div>
     )
 }

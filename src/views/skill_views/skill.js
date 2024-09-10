@@ -15,7 +15,7 @@ const Skill = () => {
         details:''
     })
 
-    const {data, isPending, Error} = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/skill/`+id);
+    const {data, isPending, Error} = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/skills/`+id);
 
     useEffect(() => {
         if (data) {
@@ -24,7 +24,7 @@ const Skill = () => {
       },[data]);
 
     const handleDelete= () => {
-        fetch(`${process.env.REACT_APP_SERVER_URL}/api/skill/`+id, { 
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/skills/`+id, {
         method: 'DELETE',
         credentials:'include'
         })
@@ -64,7 +64,7 @@ const Skill = () => {
             {/* edit mode */}
             {editMode && 
             <div className='newSkill_wrapper'>
-                <SubmitPage title='Edit Skill' url={`${process.env.REACT_APP_SERVER_URL}/api/skill/`+id} method='PATCH' data={this_skill} setData={setThisSkill} setResult={switchEdit}/>
+                <SubmitPage title='Edit Skill' url={`${process.env.REACT_APP_SERVER_URL}/api/skills/`+id} method='PATCH' data={this_skill} setData={setThisSkill} setResult={switchEdit}/>
         </div>}
             
         </div>
